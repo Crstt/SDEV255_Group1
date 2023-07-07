@@ -1,3 +1,11 @@
+.courses_content {
+  min-height: 40vh;
+}
+
+.details_content{
+  min-height: 80vh;
+}
+
 body::before {
   display: block;
   content: '';
