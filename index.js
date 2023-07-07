@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const Course = require('./models/course');
 const path = require("path")
 
+const fs = require('fs');
+const parse = require('csv-parser');
+
+
 const Options = require('./classes/options');
 const User = require('./classes/user');
 
@@ -34,6 +38,44 @@ app.use("/js", express.static("./node_modules/bootstrap/dist/js"))
 app.get('/', (req, res) => {
   res.redirect('/courses');
 });
+
+app.get('/mass-add', (req, res) => {
+  readCSVAndSaveData();
+  res.redirect('/courses');
+})
+
+function readCSVAndSaveData() {
+  const results = [];
+  fs.createReadStream('courses.csv')
+    .pipe(parse())
+    .on('data', data => results.push(data))
+    .on('end', () => {
+      saveCoursesToDatabase(results);
+    });
+}
+
+function saveCoursesToDatabase(coursesData) {
+  const courses = coursesData.map(course => {
+    return new Course({
+      name: course.name,      
+      code: course.code,
+      teacher: course.teacher,
+      description: course.description,
+      subjectArea: course.subjectArea,
+      credits: course.credits
+    });
+  });
+
+  Course.insertMany(courses)
+    .then(result => {
+      console.log('Courses saved to the database:', result);
+      mongoose.disconnect();
+    })
+    .catch(err => {
+      console.error('Error saving courses to the database:', err);
+      mongoose.disconnect();
+    });
+}
 
 app.get('/courses', (req, res) => {
   Course.find()
