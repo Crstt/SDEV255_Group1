@@ -1,17 +1,13 @@
 <html lang="en">
 <%- include("./partials/head.ejs") %>
 
-<body class="bg-dark text-white">
-  <%- include("./partials/nav.ejs") %>
+  <body class="bg-dark text-white">
+    <%- include("./partials/nav.ejs") %>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6">
-        <div class="card bg-dark">
-          <div class="card-header">
-            <h5 class="card-title text-white">Create Course</h5>
-          </div>
-          <div class="card-body">
+      <section class="container justify-content-center">
+        <div class="bg-dark">
+          <h5 class="title text-white">Create Course</h5>
+          <div class=" text-light">
             <form action="/courses" method="POST">
               <div class="mb-3">
                 <label for="name" class="form-label">Course Name:</label>
@@ -21,16 +17,22 @@
                 <label for="description" class="form-label">Course Description:</label>
                 <input type="text" id="description" name="description" class="form-control" required>
               </div>
+              <div class="mb-3">
+                <label for="subjectArea" class="form-label">Subject Area:</label>
+                <input type="text" id="subjectArea" name="subjectArea" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="credits" class="form-label">Number of Credits:</label>
+                <input type="number" id="credits" name="credits" class="form-control" required>
+              </div>
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
             </form>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <%- include("./partials/footer.ejs") %>
-</body>
+      <%- include("./partials/footer.ejs") %>
+  </body>
 
 </html>

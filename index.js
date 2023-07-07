@@ -11,7 +11,7 @@ const optionsFile = 'options.txt';
 const options = new Options(optionsFile);
 const user = new User("johnDoe", "johndoe@example.com", false);
 const app = express();
-const dbURI = `mongodb+srv://${options.user}:${options.password}@cluster0.zqw4cyc.mongodb.net/Cluster0?retryWrites=true&w=majority`;
+const dbURI = `mongodb+srv://${options.user}:${options.password}@cluster0.zqw4cyc.mongodb.net/ScheduleBuilder?retryWrites=true&w=majority`;
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => app.listen(3000))

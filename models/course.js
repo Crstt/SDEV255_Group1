@@ -9,7 +9,15 @@ const courseSchema = new Schema({
   description: {
     type: String,
     required: true,
-  }
+  },
+  subjectArea: {
+    type: String,
+    required: true,
+  },
+  credits: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Course = mongoose.model('Course', courseSchema);
