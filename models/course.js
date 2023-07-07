@@ -6,6 +6,14 @@ const courseSchema = new Schema({
     type: String,
     required: true,
   },
+  code: {
+    type: String,
+    required: true,
+  },
+  teacher: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
@@ -15,7 +23,7 @@ const courseSchema = new Schema({
     required: true,
   },
   credits: {
-    type: Number,
+    type: String,
     required: true,
   },
 });

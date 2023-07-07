@@ -26,38 +26,47 @@
       <h2 class="bg-primary m-0 p-5 text-center text-light">All Courses</h2>
 
       <section class="courses_content text-light bg-dark p-5">
-        <table class="table table-dark table-striped ">
-          <% if (Courses.length> 0) { %>
-            <% Courses.forEach(course=> { %>
-              <tr onclick="window.location='/courses/<%= course._id %>'" style="cursor: pointer;">
-                <td>
-                  <h3 class="text-center">
-                    <%= course.name %>
-                  </h3>
-                </td>
-                <td>
-                  <p class="text-center">
-                    <%= course.description %>
-                  </p>
-                </td>
-                <td>
-                  <p class="text-center">
-                    <%= course.subjectArea %>
-                  </p>
-                </td>
-                <td>
-                  <p class="text-center">
-                    <%= course.credits %>
-                  </p>
-                </td>
-              </tr>
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th class="text-center">Course Name</th>
+              <th class="text-center">Teacher</th>
+              <th class="text-center">Description</th>
+              <th class="text-center">Subject Area</th>
+              <th class="text-center">Credits</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (Courses.length > 0) { %>
+              <% Courses.forEach(course => { %>
+                <tr onclick="window.location='/courses/<%= course._id %>'" style="cursor: pointer;">
+                  <td>
+                    <h3 class="text-center"><%= course.name %></h3>
+                  </td>
+                  <td>
+                    <p class="text-center"><%= course.code %></p>
+                  </td>
+                  <td>
+                    <p class="text-center"><%= course.teacher %></p>
+                  </td>
+                  <td>
+                    <p class="text-center"><%= course.description %></p>
+                  </td>
+                  <td>
+                    <p class="text-center"><%= course.subjectArea %></p>
+                  </td>
+                  <td>
+                    <p class="text-center"><%= course.credits %></p>
+                  </td>
+                </tr>
               <% }) %>
-                <% } else { %>
-                  <tr>
-                    <td colspan="2">There are no courses to display...</td>
-                  </tr>
-                  <% } %>
-        </table>
+            <% } else { %>
+              <tr>
+                <td colspan="5">There are no courses to display...</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>        
       </section>
 
       <%- include("./partials/footer.ejs") %>
