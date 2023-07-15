@@ -1,11 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const Course = require('./models/course');
-const path = require("path")
-
-const fs = require('fs');
-const parse = require('csv-parser');
+const courseRoutes = require('./routes/courseRoutes');
 
 
 const Options = require('./classes/options');
@@ -23,6 +19,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // register view engine
 app.set('view engine', 'ejs');
+app.use(express.json());
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
@@ -39,93 +36,7 @@ app.get('/', (req, res) => {
   res.redirect('/courses');
 });
 
-app.get('/mass-add', (req, res) => {
-  readCSVAndSaveData();
-  res.redirect('/courses');
-})
-
-function readCSVAndSaveData() {
-  const results = [];
-  fs.createReadStream('courses.csv')
-    .pipe(parse())
-    .on('data', data => results.push(data))
-    .on('end', () => {
-      saveCoursesToDatabase(results);
-    });
-}
-
-function saveCoursesToDatabase(coursesData) {
-  const courses = coursesData.map(course => {
-    return new Course({
-      name: course.name,      
-      code: course.code,
-      teacher: course.teacher,
-      description: course.description,
-      subjectArea: course.subjectArea,
-      credits: course.credits
-    });
-  });
-
-  Course.insertMany(courses)
-    .then(result => {
-      console.log('Courses saved to the database:', result);
-      mongoose.disconnect();
-    })
-    .catch(err => {
-      console.error('Error saving courses to the database:', err);
-      mongoose.disconnect();
-    });
-}
-
-app.get('/courses', (req, res) => {
-  Course.find()
-    .then(result => {
-      res.render('index', { Courses: result, title: 'All Courses' , user : req.user});
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-app.get('/courses/create', (req, res) => {
-  res.render('create', { title: 'Create a new course', user : req.user});
-});
-
-app.post('/courses', (req, res) => {
-  // console.log(req.body);
-  const course = new Course(req.body);
-
-  course.save()
-    .then(result => {
-      res.redirect('/courses');
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-app.get('/courses/:id', (req, res) => {
-  const id = req.params.id;
-  Course.findById(id)
-    .then(result => {
-      res.render('details', { course: result, title: 'Course Details', user : req.user});
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-app.delete('/courses/:id', (req, res) => {
-  const id = req.params.id;
-
-  Course.findByIdAndDelete(id)
-    .then(result => {
-      res.json({ redirect: '/courses' });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
+app.use('/courses', courseRoutes);
 
 // 404 page
 app.use((req, res) => {
