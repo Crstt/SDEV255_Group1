@@ -2,7 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const courseRoutes = require('./routes/courseRoutes');
-
+const authRoutes = require('./routes/authRoutes');
+const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 
 const Options = require('./classes/options');
 const User = require('./classes/user');
