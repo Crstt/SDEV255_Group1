@@ -38,6 +38,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/courses', courseRoutes);
+app.use(authRoutes);
 
 // 404 page
 app.use((req, res) => {
