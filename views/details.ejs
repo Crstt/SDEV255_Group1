@@ -9,10 +9,10 @@
           <div class="content">
             <h1>
               <%= course.name %>
-            </h1>          
+            </h1>
             <p><strong>Code:</strong>
               <%= course.code %>
-            </p>            
+            </p>
             <p><strong>Teacher:</strong>
               <%= course.teacher %>
             </p>
@@ -26,20 +26,21 @@
               <%= course.credits %>
             </p>
           </div>
-          
-          <button class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#confirmSelection">
-            Delete
+
+          <button class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#confirmSelection"> Delete
           </button>
+
+          <a href="/courses/update/<%= course._id %>" class="btn btn-secondary">Edit</a>
         </div>
       </section>
 
-      <!-- Modal -->
+      <!-- Delete Modal -->
       <div class="modal fade" id="confirmSelection" tabindex="-1" aria-labelledby="confirmSelectionLabel"
         aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="confirmSelectionLabel">Confirm Selection</h5>
+              <h5 class="modal-title" id="confirmSelectionLabel">Delete Course</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -52,8 +53,6 @@
           </div>
         </div>
       </div>
-
-
 
       <%- include("./partials/footer.ejs") %>
 
@@ -70,7 +69,6 @@
               .then(data => window.location.href = data.redirect)
               .catch(err => console.log(err));
           });
-
         </script>
   </body>
 
