@@ -8,7 +8,7 @@
         <div class="bg-dark">
           <h5 class="title text-white">Create Course</h5>
           <div class=" text-light">
-            <form action="/courses" method="POST" id="courseForm">
+            <form action="/courses/update/<%= course.id %>" method="POST" id="courseForm">
               <div class="mb-3">
                 <label for="name" class="form-label">Course Name:</label>
                 <input type="text" id="name" name="name" class="form-control" value="<%= course.name %>" required>
@@ -37,7 +37,7 @@
                 <input type="number" id="credits" name="credits" class="form-control" value="<%= course.credits %>"
                   required>
               </div>
-              <button class="btn btn-danger update" data-bs-toggle="modal"
+              <button class="btn btn-warning update" data-bs-toggle="modal"
                 data-bs-target="#confirmSelection">Update</button>
               <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
             </form>

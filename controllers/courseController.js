@@ -54,7 +54,18 @@ const courses_details = (req, res) => {
 
 const courses_update = (req, res) => {
 
-    Course.findByIdAndUpdate(req.params.id, req.body)
+    const courseId = req.params.id;
+    const updatedCourse = {
+        name: req.body.name,
+        code: req.body.code,
+        teacher: req.body.teacher,
+        description: req.body.description,
+        subjectArea: req.body.subjectArea,
+        credits: req.body.credits
+    };
+    console.log(req.body);
+
+    Course.findOneAndUpdate({ _id: courseId }, updatedCourse, { new: true })
         .then(result => {
             res.json({ redirect: '/courses' });
         })
