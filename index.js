@@ -7,7 +7,6 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
 
-
 const Options = require('./classes/options');
 
 const optionsFile = 'options.txt';

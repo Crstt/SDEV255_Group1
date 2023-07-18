@@ -26,11 +26,13 @@
               <%= course.credits %>
             </p>
           </div>
+          
+          <% if (user && user.type=='teacher' ) { %>
+            <button class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#confirmSelection"> Delete
+            </button>
 
-          <button class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#confirmSelection"> Delete
-          </button>
-
-          <a href="/courses/update/<%= course._id %>" class="btn btn-warning">Edit</a>
+            <a href="/courses/update/<%= course._id %>" class="btn btn-warning">Edit</a>
+          <% } %>
         </div>
       </section>
 
