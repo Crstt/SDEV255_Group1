@@ -7,7 +7,7 @@ const parse = require('csv-parser');
 const courses_index = (req, res) => {
     Course.find()
         .then(result => {
-            res.render('index', { Courses: result, title: 'All Courses', user: req.user });
+            res.render('index', { Courses: result, title: 'All Courses'});
         })
         .catch(err => {
             console.log(err);
@@ -15,14 +15,14 @@ const courses_index = (req, res) => {
 }
 
 const courses_create = (req, res) => {
-    res.render('create', { title: 'Create a new course', user: req.user });
+    res.render('create', { title: 'Create a new course'});
 }
 
 const courses_update_page = (req, res) => {
     const id = req.params.id;
     Course.findById(id)
         .then(result => {
-            res.render('update', { course: result, title: 'Course Details', user: req.user });
+            res.render('update', { course: result, title: 'Course Details'});
         })
         .catch(err => {
             console.log(err);
@@ -45,7 +45,7 @@ const courses_details = (req, res) => {
     const id = req.params.id;
     Course.findById(id)
         .then(result => {
-            res.render('details', { course: result, title: 'Course Details', user: req.user });
+            res.render('details', { course: result, title: 'Course Details'});
         })
         .catch(err => {
             console.log(err);

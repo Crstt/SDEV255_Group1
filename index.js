@@ -3,14 +3,15 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const courseRoutes = require('./routes/courseRoutes');
 const authRoutes = require('./routes/authRoutes');
-const { requireAuth, checkUser } = require('./middleware/authMiddleware');
+
+const cookieParser = require('cookie-parser');
+const { checkUser } = require('./middleware/authMiddleware');
+
 
 const Options = require('./classes/options');
-const User = require('./classes/user');
 
 const optionsFile = 'options.txt';
 const options = new Options(optionsFile);
-const user = new User("johnDoe", "johndoe@example.com", false);
 const app = express();
 const dbURI = `mongodb+srv://${options.user}:${options.password}@cluster0.zqw4cyc.mongodb.net/ScheduleBuilder?retryWrites=true&w=majority`;
 
@@ -23,6 +24,8 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 
 app.use(express.static('public'));
+app.use(cookieParser());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use((req, res, next) => {
@@ -33,6 +36,8 @@ app.use("/css", express.static("./node_modules/bootstrap/dist/css"))
 app.use("/js", express.static("./node_modules/bootstrap/dist/js"))
 
 // routes
+
+app.get('*', checkUser);
 app.get('/', (req, res) => {
   res.redirect('/courses');
 });
