@@ -63,7 +63,6 @@ const courses_update = (req, res) => {
         subjectArea: req.body.subjectArea,
         credits: req.body.credits
     };
-    console.log(req.body);
 
     Course.findOneAndUpdate({ _id: courseId }, updatedCourse, { new: true })
         .then(result => {
