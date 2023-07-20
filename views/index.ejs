@@ -10,12 +10,21 @@
           <div class="d-sm-flex align-items-center justify-content-between">
             <div>
               <h1>Enroll in <span class="text-warning"> Courses </span></h1>
-              <p class="lead my-4">
-                Start to create your schedule today!
-              </p>
-              <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#enroll">
-                Start The Enrollment
-              </button>
+              <% if (user) {%>
+                <p class="lead my-4">
+                  Click an a course to add it to your schedule!
+                </p>
+                <button class="btn btn-primary btn-lg" data-bs-target="#enroll" onclick='(()=>{window.location.href = "#enroll";})()'>
+                  Start The Enrollment
+                </button>
+              <% }else { %>                
+                <p class="lead my-4">
+                  Start to create your schedule today!
+                </p>
+                <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#enroll" onclick='(()=>{window.location.href = "/login";})()'>
+                  Start The Enrollment
+                </button>                
+              <% } %>
             </div>
             <img class="img-fluid w-50 d-none d-sm-block" src="/img/showcase.svg" alt="" />
           </div>
@@ -25,7 +34,11 @@
 
       <h2 class="bg-primary m-0 p-5 text-center text-light">All Courses</h2>
 
-      <section class="courses_content text-light bg-dark p-5">
+      <section class="courses_content text-light bg-dark p-5" id="enroll">
+        <div class="input-group">
+          <span class="input-group-text">Search</span>
+          <textarea class="form-control" id="searchInput" placeholder=""aria-label="With textarea"></textarea>
+        </div>
         <table class="table table-dark table-striped">
           <thead>
             <tr>
@@ -37,7 +50,7 @@
               <th class="text-center">Credits</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="courseTableBody">
             <% if (Courses.length > 0) { %>
               <% Courses.forEach(course => { %>
                 <tr onclick="window.location='/courses/<%= course._id %>'" style="cursor: pointer;">
@@ -67,8 +80,39 @@
               </tr>
             <% } %>
           </tbody>
-        </table>        
-      </section>
+        </table>    
+      </section>    
+
+      <script>
+        // JavaScript code to filter the table based on search query
+        const searchInput = document.getElementById('searchInput');
+        const courseTableBody = document.getElementById('courseTableBody');
+        const rows = courseTableBody.getElementsByTagName('tr');
+      
+        searchInput.addEventListener('keyup', () => {
+          const query = searchInput.value.toLowerCase();
+      
+          for (const row of rows) {
+            const columns = row.getElementsByTagName('td');
+            let found = false;
+      
+            for (const column of columns) {
+              const text = column.innerText.toLowerCase();
+              if (text.includes(query)) {
+                found = true;
+                break;
+              }
+            }
+      
+            if (found) {
+              row.style.display = '';
+            } else {
+              row.style.display = 'none';
+            }
+          }
+        });
+      </script>
+
 
       <%- include("./partials/footer.ejs") %>
   </body>
