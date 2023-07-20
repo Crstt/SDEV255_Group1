@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const Schedule = require("../models/schedule");
 const jwt = require('jsonwebtoken');
 
 
@@ -59,8 +58,6 @@ module.exports.signup_post = async (req, res) => {
 
   try {
     const user = await User.create({ name, email, password, type: 'student', Schedule: []});
-    //const schedule = await Schedule.create({ studentId: user._id, courseId: []});
-    //const schedule = new Schedule({ studentId: user._id, courseCode: []});
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(201).json({ user: user._id });
