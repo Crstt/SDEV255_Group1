@@ -33,6 +33,13 @@
 
             <a href="/courses/update/<%= course._id %>" class="btn btn-warning">Edit</a>
           <% } %>
+          <% if (user && user.type=='student') { 
+             if(user.schedule && user.schedule.indexOf(course._id) > -1) { %>              
+              <a href="/schedule/remove/<%= course._id %>" class="btn btn-warning">Remove from schedule</a>
+            <% } else {%>
+              <a href="/schedule/add/<%= course._id %>" class="btn btn-warning">Add to schedule</a>
+            <% } %>
+          <% } %>
         </div>
       </section>
 

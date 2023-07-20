@@ -2,6 +2,10 @@
   min-height: 40vh;
 }
 
+.schedule_content {
+  min-height: 75vh;
+}
+
 .details_content{
   min-height: 80vh;
 }

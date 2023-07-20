@@ -19,6 +19,11 @@
               <a href="/courses/create" class="nav-link">New Course</a>
             </li>
           <% } %>
+          <% if (user && user.type=='student' ) { %>
+            <li class="nav-item">
+              <a href="/schedule" class="nav-link">Schedule</a>
+            </li>
+          <% } %>
           <% if (user) { %>
             <li class="nav-item"></li><a href="/logout" class="nav-link">Logout</a></li>
           <% } else { %>
