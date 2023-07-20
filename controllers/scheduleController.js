@@ -1,6 +1,5 @@
 const { find } = require('lodash');
 const Course = require('../models/course');
-const Schedule = require('../models/schedule');
 const User = require('../models/User');
 
 
