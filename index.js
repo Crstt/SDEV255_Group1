@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const courseRoutes = require('./routes/courseRoutes');
 const authRoutes = require('./routes/authRoutes');
+const scheduleRoutes = require('./routes/scheduleRoutes');
 
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
@@ -43,8 +44,15 @@ app.get('/', (req, res) => {
 
 app.use('/courses', courseRoutes);
 app.use(authRoutes);
+app.use('/schedule', scheduleRoutes);
 
 // 404 page
 app.use((req, res) => {
   res.status(404).render('404', { title: '404', user : req.user});
+});
+
+// 500 page
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  res.status(500).render('404', { title: '500', user : req.user});
 });

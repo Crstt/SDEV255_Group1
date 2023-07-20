@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter a user type'],
         enum: ['student', 'teacher']
     },
+    schedule: {
+      type: [String],
+      required: [true, 'Please enter a schedule code'],
+  },
 });
 
 // fire a function before doc saved to db
