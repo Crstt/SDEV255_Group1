@@ -4,22 +4,22 @@ const jwt = require('jsonwebtoken');
 
 // handle errors
 const handleErrors = (err) => {
-  console.log(err.message, err.code);
+  
   let errors = { name: '', email: '', password: '' };
 
   // incorrect email
-  if (err.message === 'incorrect email') {
+  if (err.message === 'Incorrect email') {
     errors.email = 'That email is not registered';
   }
 
   // incorrect password
-  if (err.message === 'incorrect password') {
+  if (err.message === 'Incorrect password') {
     errors.password = 'That password is incorrect';
   }
 
   // duplicate email error
   if (err.code === 11000) {
-    errors.email = 'that email is already registered';
+    errors.email = 'That email is already registered';
     return errors;
   }
 
@@ -32,6 +32,8 @@ const handleErrors = (err) => {
       errors[properties.path] = properties.message;
     });
   }
+
+  //console.log(errors)
 
   return errors;
 }
